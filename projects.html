@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Projects | Ben Pullis</title>
+  <link rel="stylesheet" href="css/projects.css" />
+  <link rel="icon" href="assets/favicon.png" />
+</head>
+<body>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main class="projects-container">
+    <h1>Projects</h1>
+    <div class="project-buttons">
+      <button onclick="showProject('project1')">Drone Simulations</button>
+      <button onclick="showProject('project2')">Contact Log</button>
+      <button onclick="showProject('project3')">Chess</button>
+      <button onclick="showProject('project4')">Minesweeper</button>
+    </div>
+    <section id="project1" class="project-content active">
+      <h2>Drone Simulations</h2>
+      <p>Multi-drone coordination and recharging system for package delivery.</p>
+    </section>
+    <section id="project2" class="project-content">
+      <h2>Contact Log</h2>
+      <p>Command-line based address book using C and scanf parsing.</p>
+    </section>
+    <section id="project3" class="project-content">
+      <h2>Chess</h2>
+      <p>Two-player terminal chess in C++ with piece legality and checkmate.</p>
+    </section>
+    <section id="project4" class="project-content">
+      <h2>Minesweeper</h2>
+      <p>CLI-based minesweeper written in Python with recursive board logic.</p>
+    </section>
+  </main>
+
+  <script>
+    function showProject(id) {
+      document.querySelectorAll('.project-content').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+    }
+  </script>
+</body>
+</html>

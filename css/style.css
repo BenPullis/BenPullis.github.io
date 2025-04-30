@@ -14,7 +14,7 @@
   
   /* Hero section */
   .hero {
-    background-image: url('assets/background.jpg'); /* Replace with your image */
+    background-image: url('../assets/background.jpg'); /* Replace with your image */
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -46,6 +46,7 @@
     font-weight: bold;
     letter-spacing: 1px;
     transition: 0.3s;
+    font-size: 20px;
   }
   
   nav ul li a:hover {

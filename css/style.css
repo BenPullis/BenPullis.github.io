@@ -60,12 +60,12 @@
   
   .hero-content h1 {
     font-size: 64px;
-    margin-bottom: 10px;
+    margin-bottom: 25px;
   }
   
   .hero-content p {
     font-size: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
   }
   
   /* Logo Buttons */
@@ -83,6 +83,26 @@
   }
   
   .logo-buttons a img:hover {
+    transform: scale(1.15);
+  }
+
+  .resume-button {
+    margin-top: 25px;
+  }
+  
+  .resume-button a {
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s, transform 0.3s;
+    display: inline-block;
+  }
+  
+  .resume-button a:hover {
+    color: rgb(255, 255, 255);
     transform: scale(1.15);
   }
   

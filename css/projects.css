@@ -6,18 +6,86 @@
   font-family: 'Segoe UI', sans-serif;
 }
 
-html, body {
-  height: 100%;
-  background: #F0D9B5; /* tan background */
-  color: rgb(97, 34, 27); /* maroon text */
+/* Theme-based background */
+html {
+  background-color: #f5f5f5; /* Light background by default for transitions */
+}
+
+html.dark-mode {
+  background-color: #222; /* Dark background when dark mode class is applied */
+}
+
+body {
+  background-color: var(--bg-color); /* Apply themed background from CSS variables */
+  color: var(--text-color);
+  min-height: 100%;
+  height: auto;
+  overflow-x: hidden;
+  transition: background-color 0.3s;
+}
+
+:root {
+  /* Theme colors - dark theme by default */
+  --bg-color: #222;
+  --text-color: #fff;
+  --accent-color: #8aff8a;
+  --nav-hover-color: #8aff8a;
+  --button-bg: #444;
+  --button-text: white;
+  --button-hover-bg: #8aff8a;
+  --button-hover-text: #222;
+  --section-bg: #333;
+  --footer-bg: #111;
+  --footer-color: white;
+  --page-bg-color: #222; /* Dark theme color by default */
+}
+
+.light-theme {
+  --bg-color: #f5f5f5;
+  --text-color: #333;
+  --accent-color: #ff6b00;
+  --nav-hover-color: #ff6b00;
+  --button-bg: #ff6b00;
+  --button-text: white;
+  --button-hover-bg: #e06000;
+  --button-hover-text: white;
+  --section-bg: white;
+  --footer-bg: #e8e8e8;
+  --footer-color: #333;
+}
+
+/* Theme toggle button */
+.theme-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: #fff; /* White in dark mode */
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1000;
+  transition: color 0.3s ease;
+}
+
+/* Darker grey toggle button in light mode */
+.light-theme .theme-toggle {
+  color: #333; /* Darker grey in light mode */
+}
+
+.theme-toggle:hover {
+  transform: scale(1.2);
 }
 
 /* NAVIGATION BAR */
 nav {
-  position: absolute;
+  position: absolute; /* Change back to absolute to move with page scroll */
   top: 30px;
+  left: 0;
   width: 100%;
-  z-index: 10;
+  z-index: 100;
+  padding: 0;
+  background-color: transparent;
 }
 
 nav ul {
@@ -31,7 +99,7 @@ nav ul {
 
 nav ul li a {
   text-transform: uppercase;
-  color: rgb(97, 34, 27); /* maroon links */
+  color: var(--text-color);
   text-decoration: none;
   font-weight: bold;
   letter-spacing: 1px;
@@ -40,92 +108,142 @@ nav ul li a {
 }
 
 nav ul li a:hover {
-  color: orange;
+  color: var(--nav-hover-color);
 }
 
-/* MAIN PAGE LAYOUT */
-main {
+/* MAIN CONTENT */
+.projects-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  text-align: center;
-  padding-top: 100px; /* push content below nav */
+  padding-top: 110px; /* push content below nav */
+  padding-bottom: 50px; /* spacing before footer */
+  min-height: calc(100vh - 80px); /* push footer to bottom but leave room */
+  max-width: 1000px;
+  margin: 0 auto;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
-/* HEADLINE */
-.projects-container h1 {
+h1 {
   font-size: 32px;
   font-weight: bold;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
+}
+
+.project-instructions {
+  font-size: 18px;
+  margin-bottom: 25px;
+  text-align: center;
 }
 
 /* PROJECT BUTTONS */
 .project-buttons {
   display: flex;
-  gap: 20px;
   flex-wrap: wrap;
   justify-content: center;
-  margin-bottom: 30px; /* space between buttons & box */
+  gap: 15px;
+  margin-bottom: 40px;
 }
 
 .project-buttons button {
-  padding: 10px 20px;
-  font-size: 16px;
-  font-weight: bold;
+  background-color: var(--button-bg);
+  color: var(--button-text);
   border: none;
-  background-color: rgb(97, 34, 27);
-  color: white;
-  border-radius: 6px;
+  padding: 12px 20px;
+  border-radius: 4px;
+  font-size: 16px;
   cursor: pointer;
-  transition: background-color 0.3s, transform 0.3s;
+  transition: background-color 0.3s, transform 0.3s, color 0.3s;
 }
 
 .project-buttons button:hover {
-  background-color: rgb(137, 79, 72);
-  color: white;
-  transform: scale(1.05);
+  background-color: var(--button-hover-bg);
+  color: var(--button-hover-text);
+  transform: translateY(-3px);
 }
 
-/* PROJECT CONTENT WHITE BOX */
+/* PROJECT CONTENT */
 .project-content {
   display: none;
-  max-width: 800px;
-  width: 90%;
-  margin: 0 auto; /* center the box */
-  background: white;
+  background-color: var(--section-bg);
   padding: 30px;
   border-radius: 8px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-  text-align: left;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px;
+  transition: opacity 0.5s, transform 0.5s;
+  margin-bottom: 25px;
 }
 
 .project-content.active {
   display: block;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.5s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .project-content h2 {
   font-size: 24px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 5px;
+  display: inline-block;
 }
 
 .project-content p {
-  font-size: 18px;
-}
-
-/* LISTS */
-ul {
-  list-style-type: disc;
-  padding-left: 20px;
-  margin-top: 10px;
+  line-height: 1.6;
+  margin-bottom: 20px;
 }
 
 /* FOOTER */
 .site-footer {
-  background-color: rgb(97, 34, 27); /* maroon footer */
-  color: white;
+  background-color: var(--footer-bg);
+  color: var(--footer-color);
   text-align: center;
   padding: 30px 0;
-  position: relative;
+  width: 100%;
   font-size: 1rem;
-  margin-top: 50px; /* creates space above footer */
 }
+
+/* Scroll Animations */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .project-buttons {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .project-buttons button {
+    width: 100%;
+  }
+  
+  nav ul {
+    gap: 15px;
+  }
+  
+  nav ul li a {
+    font-size: 16px;
+  }
+}
+
+/* Remove other flash prevention approaches */
+/* ... existing code ... */

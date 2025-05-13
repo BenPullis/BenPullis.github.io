@@ -3,10 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#222222">
   <title>Ben Pullis</title>
   <link rel="stylesheet" href="css/style.css"/>
   <link rel="icon" href="assets/favicon.png"/>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 </head>
 <body>
   <div class="hero">
@@ -21,7 +22,7 @@
     <div class="hero-content">
         <h1>Ben Pullis</h1>
         <p>Computer Science @ The University of Minnesota</p>
-        <div class="logo-buttons">
+        <div class="logo-buttons fade-in">
           <a href="https://github.umn.edu/Pulli068" target="_blank">
             <img src="assets/github.png" alt="GitHub" />
           </a>
@@ -32,10 +33,37 @@
             <img src="assets/docker.png" alt="Docker" />
           </a>
         </div>
-        <div class="resume-button">
+        <div class="resume-button fade-in">
           <a href="assets/Resume.pdf" target="_blank">RESUME</a>
         </div>        
       </div>
   </div> 
+  
+  <!-- JavaScript for scroll animations only -->
+  <script>
+    // Scroll Animations
+    const fadeElems = document.querySelectorAll('.fade-in');
+
+    // Immediately show elements in the viewport
+    fadeElems.forEach(elem => {
+      elem.classList.add('active');
+    });
+    
+    // For future scroll animations as we add more content
+    function checkScroll() {
+      fadeElems.forEach(elem => {
+        const elemTop = elem.getBoundingClientRect().top;
+        const triggerPoint = window.innerHeight * 0.8;
+        
+        if (elemTop < triggerPoint) {
+          elem.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    // Run once to check initial position
+    checkScroll();
+  </script>
 </body>
 </html>

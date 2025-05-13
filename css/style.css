@@ -4,105 +4,160 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', sans-serif;
-  }
-  
-  html, body {
+}
+
+/* Prevent flash during page transitions */
+html {
+    background-color: #222; /* Dark theme color for homepage */
+}
+
+body {
+    background-color: #222; /* Dark background for homepage */
+    color: var(--text-color);
     height: 100%;
-    background: #000;
-    color: white;
-  }
-  
-  /* Hero section */
-  .hero {
+}
+
+:root {
+    /* Home page always uses dark theme colors */
+    --bg-color: #222;
+    --text-color: #fff;
+    --accent-color: orange;
+    --footer-bg: #111;
+    --footer-color: #fff;
+}
+
+html, body {
+    height: 100%;
+    background-color: #222; /* Dark background for homepage */
+    color: var(--text-color);
+}
+
+/* Hero section */
+.hero {
     background-image: url('../assets/background.jpg'); /* Replace with your image */
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 100vh; /* Full viewport height */
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-  }
-  
-  /* Navigation Bar */
-  nav {
+    color: white; /* Always white text in hero section */
+}
+
+/* Navigation Bar */
+nav {
     position: absolute;
     top: 30px;
     width: 100%;
-  }
-  
-  nav ul {
+}
+
+nav ul {
     list-style: none;
     display: flex;
     justify-content: center;
     gap: 30px;
-  }
-  
-  nav ul li a {
-    color: white;
+}
+
+nav ul li a {
+    color: white; /* Always white text for navigation */
     text-decoration: none;
     font-weight: bold;
     letter-spacing: 1px;
     transition: 0.3s;
     font-size: 20px;
-  }
-  
-  nav ul li a:hover {
-    color: orange;
-  }
-  
-  /* Hero Content */
-  .hero-content {
+}
+
+nav ul li a:hover {
+    color: orange; /* Always orange on hover */
+}
+
+/* Hero Content */
+.hero-content {
     margin-top: -100px; /* Moves name/description up */
-  }
-  
-  .hero-content h1 {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards;
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.hero-content h1 {
     font-size: 64px;
     margin-bottom: 25px;
-  }
-  
-  .hero-content p {
+    color: white; /* Always white text */
+}
+
+.hero-content p {
     font-size: 20px;
     margin-bottom: 25px;
-  }
-  
-  /* Logo Buttons */
-  .logo-buttons {
+    color: white; /* Always white text */
+}
+
+/* Logo Buttons */
+.logo-buttons {
     margin-top: 30px;
     display: flex;
     justify-content: center;
     gap: 35px;
-  }
-  
-  .logo-buttons a img {
+}
+
+.logo-buttons a img {
     height: 40px;
     transition: transform 0.3s ease;
     display: block;
-  }
-  
-  .logo-buttons a img:hover {
-    transform: scale(1.15);
-  }
+}
 
-  .resume-button {
+.logo-buttons a img:hover {
+    transform: scale(1.15);
+}
+
+.resume-button {
     margin-top: 25px;
-  }
-  
-  .resume-button a {
+}
+
+.resume-button a {
     text-transform: uppercase;
     font-size: 20px;
     font-weight: bold;
-    color: rgb(255, 255, 255);
+    color: white; /* Always white text */
     text-decoration: none;
     cursor: pointer;
     transition: color 0.3s, transform 0.3s;
     display: inline-block;
-  }
-  
-  .resume-button a:hover {
-    color: rgb(255, 255, 255);
+}
+
+.resume-button a:hover {
+    color: white; /* Always orange on hover */
     transform: scale(1.15);
-  }
+}
+
+/* Scroll Animations */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Footer */
+.site-footer {
+    background-color: var(--footer-bg);
+    color: var(--footer-color);
+    text-align: center;
+    padding: 30px 0;
+    position: relative;
+    font-size: 1rem;
+}
   

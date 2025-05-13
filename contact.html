@@ -3,11 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#f5f5f5">
+  
+  <!-- Preload script to immediately apply theme before any rendering -->
+  <script>
+    // Check for stored theme and apply it to HTML element directly
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      // Light mode - no class needed as it's the default
+    } else {
+      // Dark mode is default or explicitly set
+      document.documentElement.classList.add('dark-mode');
+    }
+  </script>
+  
   <title>Contact | Ben Pullis</title>
   <link rel="stylesheet" href="css/contact.css" />
   <link rel="icon" href="assets/favicon.png" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 <body>
+  <!-- Theme toggle button -->
+  <button class="theme-toggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
   <nav>
     <ul>
       <li><a href="index.html">Home</a></li>
@@ -18,16 +39,134 @@
   </nav>
 
   <main class="contact-container">
-    <h1>Contact Me</h1>
-    <p>Feel free to reach out through any of the platforms below:</p>
-    <div class="contact-links">
-      <a href="mailto:your.email@example.com">Email</a>
-      <a href="https://www.linkedin.com/in/ben-pullis-9457b22b0/" target="_blank">LinkedIn</a>
-      <a href="https://github.com/BenPullis" target="_blank">GitHub</a>
+    <h1 class="fade-in">Contact Me</h1>
+    <p class="fade-in">Feel free to reach out through any of the platforms below:</p>
+    
+    <div class="contact-links fade-in">
+      <a href="mailto:pullisben14@gmail.com"><i class="fas fa-envelope"></i> Email</a>
+      <a href="https://www.linkedin.com/in/ben-pullis-9457b22b0/" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a>
+      <a href="https://github.com/BenPullis" target="_blank"><i class="fab fa-github"></i> GitHub</a>
+    </div>
+    
+    <div class="contact-form-container fade-in">
+      <h2>Send me a message</h2>
+      <form id="contact-form" class="contact-form" action="https://formspree.io/f/xdkgpdbr" method="POST" onsubmit="this.reset(); return true;">
+        <div class="form-group">
+          <label for="name">Name</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="_replyto" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="subject">Subject</label>
+          <input type="text" id="subject" name="subject" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" rows="5" required></textarea>
+        </div>
+        
+        <!-- Redirect after submission -->
+        <input type="hidden" name="_next" value="https://benpullis.github.io/contact.html?submitted=true">
+        
+        <button type="submit" class="submit-btn">Send Message</button>
+      </form>
     </div>
   </main>
+
   <footer class="site-footer">
     <p>© 2025 Ben Pullis. All rights reserved.</p>
   </footer>  
+
+  <!-- JavaScript for our features -->
+  <script>
+    // Add loaded class to fade out the overlay
+    window.addEventListener('load', function() {
+      document.body.classList.add('loaded');
+    });
+    
+    // Check for stored theme preference and apply it
+    document.addEventListener('DOMContentLoaded', function() {
+      // Check if user has a theme preference in localStorage
+      const userTheme = localStorage.getItem('theme');
+      const themeIcon = document.querySelector('.theme-toggle i');
+      
+      if (userTheme === 'light') {
+        document.documentElement.classList.remove('dark-mode');
+        document.body.classList.add('light-theme');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+      } else {
+        // Ensure dark mode is applied
+        document.documentElement.classList.add('dark-mode');
+      }
+      
+      // Add loaded class to fade out the overlay after a short delay
+      setTimeout(function() {
+        document.body.classList.add('loaded');
+      }, 50);
+    });
+    
+    // Dark/Light Theme Toggle
+    const themeToggle = document.querySelector('.theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    
+    themeToggle.addEventListener('click', () => {
+      document.body.classList.toggle('light-theme');
+      document.documentElement.classList.toggle('dark-mode');
+      
+      // Update icon and html class based on current theme
+      if (document.body.classList.contains('light-theme')) {
+        document.documentElement.classList.remove('dark-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+      } else {
+        document.documentElement.classList.add('dark-mode');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+      }
+    });
+    
+    // Scroll Animations
+    const fadeElems = document.querySelectorAll('.fade-in');
+    
+    function checkScroll() {
+      fadeElems.forEach(elem => {
+        const elemTop = elem.getBoundingClientRect().top;
+        const triggerPoint = window.innerHeight * 0.8;
+        
+        if (elemTop < triggerPoint) {
+          elem.classList.add('active');
+        }
+      });
+    }
+    
+    window.addEventListener('scroll', checkScroll);
+    // Run once to check initial position
+    window.addEventListener('load', checkScroll);
+    
+    // Clear form after submission
+    const contactForm = document.getElementById('contact-form');
+    
+    // Check for URL parameter indicating submission
+    window.addEventListener('DOMContentLoaded', function() {
+      const urlParams = new URLSearchParams(window.location.search);
+      if (urlParams.has('submitted')) {
+        // Clear the URL parameter
+        window.history.replaceState({}, document.title, window.location.pathname);
+        // Alert after page loads completely
+        setTimeout(function() {
+          alert('Your message has been sent successfully!');
+        }, 500);
+      }
+    });
+  </script>
 </body>
 </html>

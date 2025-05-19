@@ -50,7 +50,7 @@
     
     <div class="contact-form-container fade-in">
       <h2>Send me a message</h2>
-      <form id="contact-form" class="contact-form" action="https://formspree.io/f/xdkgpdbr" method="POST" onsubmit="this.reset(); return true;">
+      <form id="contact-form" class="contact-form" action="https://formspree.io/f/xdkgpdbr" method="POST">
         <div class="form-group">
           <label for="name">Name</label>
           <input type="text" id="name" name="name" required>
@@ -58,7 +58,9 @@
         
         <div class="form-group">
           <label for="email">Email</label>
-          <input type="email" id="email" name="_replyto" required>
+          <input type="email" id="email" name="email" required>
+          <!-- Add hidden field for reply-to functionality -->
+          <input type="hidden" name="_replyto" value="">
         </div>
         
         <div class="form-group">
@@ -73,6 +75,9 @@
         
         <!-- Redirect after submission -->
         <input type="hidden" name="_next" value="https://benpullis.github.io/contact.html?submitted=true">
+        
+        <!-- Honeypot field to prevent spam -->
+        <input type="text" name="_gotcha" style="display:none">
         
         <button type="submit" class="submit-btn">Send Message</button>
       </form>
@@ -152,8 +157,25 @@
     // Run once to check initial position
     window.addEventListener('load', checkScroll);
     
+    // Sync email with _replyto field
+    const emailInput = document.getElementById('email');
+    const replyToField = document.querySelector('input[name="_replyto"]');
+    
+    emailInput.addEventListener('input', function() {
+      replyToField.value = this.value;
+    });
+    
     // Clear form after submission
     const contactForm = document.getElementById('contact-form');
+    
+    // Add event listener to reset form on submit
+    contactForm.addEventListener('submit', function(e) {
+      // Let the form submit normally to Formspree
+      // After a short delay, reset the form
+      setTimeout(() => {
+        this.reset();
+      }, 100);
+    });
     
     // Check for URL parameter indicating submission
     window.addEventListener('DOMContentLoaded', function() {
